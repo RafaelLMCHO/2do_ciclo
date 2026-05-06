@@ -322,6 +322,13 @@ return [
             'can'  => 'is-admin',
         ],
         [
+            'text' => 'Cursos',
+            'url'  => 'admin/cursos',
+            'icon' => 'fas fa-fw fa-book',
+            'classes' => 'bg-blue text-white',
+            'can'  => 'is-admin',
+        ],
+        [
             'text' => 'Gestiones',
             'url'  => 'admin/gestiones',
             'icon' => 'fas fa-fw fa-calendar-alt',
@@ -343,7 +350,7 @@ return [
             'can'  => 'is-admin',
         ],
         [
-            'text' => 'BitÃƒÆ’Ã‚Â¡cora',
+            'text' => 'Bitácora',
             'url'  => 'admin/bitacora',
             'icon' => 'fas fa-fw fa-history',
             'classes' => 'bg-blue text-white',
@@ -364,7 +371,7 @@ return [
             'can'  => 'is-apoderado',
         ],
         [
-            'text' => 'Cerrar SesiÃƒÆ’Ã‚Â³n',
+            'text' => 'Cerrar Sesión',
             'url'  => '#',
             'icon' => 'fas fa-fw fa-sign-out-alt',
             'classes' => 'bg-danger text-white mt-4 logout-item',

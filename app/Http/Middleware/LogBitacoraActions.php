@@ -7,23 +7,53 @@ use App\Models\User;
 use App\Support\BitacoraLogger;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogBitacoraActions
 {
     public function handle(Request $request, Closure $next): Response
     {
+        $inicio = microtime(true);
         $response = $next($request);
 
         if (!$request->user() || $response->getStatusCode() >= 400) {
+            Log::info('[PERF] LogBitacoraActions handle', [
+                'ms' => round((microtime(true) - $inicio) * 1000, 2),
+                'route' => $request->route()?->getName(),
+                'status' => $response->getStatusCode(),
+                'resultado' => 'omitido',
+            ]);
+
             return $response;
         }
 
+        $inicioResolver = microtime(true);
         $accion = $this->resolveAction($request);
 
+        Log::info('[PERF] LogBitacoraActions resolveAction', [
+            'ms' => round((microtime(true) - $inicioResolver) * 1000, 2),
+            'route' => $request->route()?->getName(),
+            'tiene_accion' => (bool) $accion,
+        ]);
+
         if ($accion) {
+            $inicioBitacora = microtime(true);
             BitacoraLogger::log($request, $accion, $request->user());
+
+            Log::info('[PERF] LogBitacoraActions bitacora', [
+                'ms' => round((microtime(true) - $inicioBitacora) * 1000, 2),
+                'route' => $request->route()?->getName(),
+                'accion' => $accion,
+            ]);
         }
+
+        Log::info('[PERF] LogBitacoraActions handle', [
+            'ms' => round((microtime(true) - $inicio) * 1000, 2),
+            'route' => $request->route()?->getName(),
+            'status' => $response->getStatusCode(),
+            'resultado' => $accion ? 'registrado' : 'sin_accion',
+        ]);
 
         return $response;
     }

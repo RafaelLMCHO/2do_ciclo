@@ -66,6 +66,18 @@
                     </a>
                 </div>
             </div>
+
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">Gestion de cursos</h3>
+                </div>
+                <div class="card-body">
+                    <p>Desde aqui puedes crear, modificar, eliminar y buscar cursos disponibles en la institucion.</p>
+                    <a href="{{ route('admin.cursos.index') }}" class="btn btn-success">
+                        <i class="fas fa-book mr-1"></i> Cursos
+                    </a>
+                </div>
+            </div>
         @endif
 
         <p>Bienvenido a la seccion de configuracion del sistema.</p>

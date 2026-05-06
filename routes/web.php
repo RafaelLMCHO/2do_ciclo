@@ -60,6 +60,13 @@ Route::get('/admin/gestiones/{id}/edit', [App\Http\Controllers\GestionController
 Route::put('/admin/gestiones/{id}', [App\Http\Controllers\GestionController::class, 'update'])->name('admin.gestiones.update')->middleware('auth');
 Route::delete('/admin/gestiones/{id}', [App\Http\Controllers\GestionController::class, 'destroy'])->name('admin.gestiones.destroy')->middleware('auth');
 
+Route::get('/admin/cursos', [App\Http\Controllers\Admin\CursoController::class, 'index'])->name('admin.cursos.index')->middleware(['auth', 'can:is-admin']);
+Route::get('/admin/cursos/create', [App\Http\Controllers\Admin\CursoController::class, 'create'])->name('admin.cursos.create')->middleware(['auth', 'can:is-admin']);
+Route::post('/admin/cursos', [App\Http\Controllers\Admin\CursoController::class, 'store'])->name('admin.cursos.store')->middleware(['auth', 'can:is-admin']);
+Route::get('/admin/cursos/{id}/edit', [App\Http\Controllers\Admin\CursoController::class, 'edit'])->name('admin.cursos.edit')->middleware(['auth', 'can:is-admin']);
+Route::put('/admin/cursos/{id}', [App\Http\Controllers\Admin\CursoController::class, 'update'])->name('admin.cursos.update')->middleware(['auth', 'can:is-admin']);
+Route::delete('/admin/cursos/{id}', [App\Http\Controllers\Admin\CursoController::class, 'destroy'])->name('admin.cursos.destroy')->middleware(['auth', 'can:is-admin']);
+
 Route::get('/admin/niveles', [NivelController::class, 'index'])->name('admin.nivels.index')->middleware('auth');
 Route::post('/admin/niveles/create', [NivelController::class, 'store'])->name('admin.nivels.store')->middleware('auth');
 Route::put('/admin/niveles/{id}', [NivelController::class, 'update'])->name('admin.nivels.update')->middleware('auth');
