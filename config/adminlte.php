@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'sistema de gestion escolar',
+    'title' => 'Sistema de Gestión Escolar',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -258,7 +258,7 @@ return [
 
     'use_route_url' => false,
     'dashboard_url' => '/',
-        'logout_url' => 'logout',
+    'logout_url' => 'logout',
     'logout_method' => 'POST',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -300,82 +300,169 @@ return [
     */
 
     'menu' => [
+        // ========== PANEL PRINCIPAL ==========
         [
-            'text' => 'Configuraciones',
-            'url'  => 'admin/configuracion',
-            'icon' => 'fas fa-fw fa-cogs',
-            'classes' => 'bg-blue text-white',
-            'can'  => 'is-admin',
+            'text' => 'PANEL PRINCIPAL',
+            'icon' => 'fas fa-fw fa-tachometer-alt',
+            'url' => 'panel',
+            'can' => 'is-admin',
         ],
+
+        // ✅ Agrega este separador SUTIL
         [
-            'text' => 'Alumnos',
-            'url'  => 'admin/alumnos',
-            'icon' => 'fas fa-fw fa-user-graduate',
-            'classes' => 'bg-blue text-white',
-            'can'  => 'is-admin',
+            'type' => 'divider',
+            'classes' => 'mt-1 mb-2',
         ],
+        // ========== USUARIOS ==========
         [
-            'text' => 'Profesores',
-            'url'  => 'admin/profesores',
+            'text' => 'USUARIOS',
+            'icon' => 'fas fa-fw fa-users',
+            'icon_color' => 'info',
+            'submenu' => [
+                [
+                    'text' => 'Administradores',
+                    'url' => 'admin/administradores',
+                    'icon' => 'fas fa-fw fa-user-shield',
+                    'can' => 'is-admin'
+                ],
+                [
+                    'text' => 'Personal Administrativo',
+                    'url' => 'admin/personal-administrativo',
+                    'icon' => 'fas fa-fw fa-user-cog',
+                    'can' => 'is-admin'
+                ],
+                [
+                    'text' => 'Profesores',
+                    'url' => 'admin/profesores',
+                    'icon' => 'fas fa-fw fa-chalkboard-teacher',
+                    'can' => 'is-admin'
+                ],
+                [
+                    'text' => 'Apoderados',
+                    'url' => 'admin/apoderados',
+                    'icon' => 'fas fa-fw fa-user-tie',
+                    'can' => 'is-admin'
+                ],
+            ],
+        ],
+
+        // ========== ACADÉMICO ==========
+        [
+            'text' => 'ACADÉMICO',
             'icon' => 'fas fa-fw fa-chalkboard-teacher',
-            'classes' => 'bg-blue text-white',
-            'can'  => 'is-admin',
+            'icon_color' => 'success',
+            'submenu' => [
+                [
+                    'text' => 'Alumnos',
+                    'url' => 'admin/alumnos',
+                    'icon' => 'fas fa-fw fa-user-graduate',
+                    'can' => 'is-admin'
+                ],
+                [
+                    'text' => 'Cursos',
+                    'url' => 'admin/cursos',
+                    'icon' => 'fas fa-fw fa-book',
+                    'can' => 'is-admin'
+                ],
+                [
+                    'text' => 'Materias',
+                    'url' => 'admin/materias',
+                    'icon' => 'fas fa-fw fa-book-open',
+                    'can' => 'is-admin'
+                ],
+                [
+                    'text' => 'Años Escolares',
+                    'url' => 'admin/gestiones',
+                    'icon' => 'fas fa-fw fa-calendar-alt',
+                    'can' => 'is-admin'
+                ],
+
+
+                [
+                    'text' => 'Horario Profesores',
+                    'url' => 'profesor/horario',
+                    'icon' => 'fas fa-fw fa-calendar-week',
+                    'icon_color' => 'purple',
+                    'can' => 'profesor-horario'
+                ],
+                [
+                    'text' => 'Consulta de Notas',
+                    'url' => 'apoderado/consulta',
+                    'icon' => 'fas fa-fw fa-file-alt',
+                    'icon_color' => 'info',
+                    'can' => 'is-apoderado'
+                ],
+            ],
         ],
+
+        // ========== FINANCIERO ==========
         [
-            'text' => 'Cursos',
-            'url'  => 'admin/cursos',
-            'icon' => 'fas fa-fw fa-book',
-            'classes' => 'bg-blue text-white',
-            'can'  => 'is-admin',
+            'text' => 'FINANCIERO',
+            'icon' => 'fas fa-fw fa-dollar-sign',
+            'icon_color' => 'warning',
+            'submenu' => [
+                [
+                    'text' => 'Pagos',
+                    'url' => 'admin/pagos',
+                    'icon' => 'fas fa-fw fa-credit-card',
+                    'can' => 'is-admin'
+                ],
+                [
+                    'text' => 'Reportes Financieros',
+                    'url' => 'admin/reportes-financieros',
+                    'icon' => 'fas fa-fw fa-chart-line',
+                    'can' => 'is-admin'
+                ],
+            ],
         ],
+
+        // ========== SEGURIDAD ==========
         [
-            'text' => 'Gestiones',
-            'url'  => 'admin/gestiones',
-            'icon' => 'fas fa-fw fa-calendar-alt',
-            'classes' => 'bg-blue text-white',
-            'can'  => 'is-admin',
+            'text' => 'SEGURIDAD',
+            'icon' => 'fas fa-fw fa-shield-alt',
+            'icon_color' => 'danger',
+            'submenu' => [
+                [
+                    'text' => 'Bitácora',
+                    'url' => 'admin/bitacora',
+                    'icon' => 'fas fa-fw fa-history',
+                    'can' => 'is-admin'
+                ],
+                [
+                    'text' => 'Modulos',
+                    'url' => 'admin/modulos',
+                    'icon' => 'fas fa-fw fa-th-large',
+                    'can' => 'is-admin'
+                ],
+                [
+                    'text' => 'Funcionalidades',
+                    'url' => 'admin/funcionalidades',
+                    'icon' => 'fas fa-fw fa-tasks',
+                    'can' => 'is-admin'
+                ],
+            ],
         ],
+
+        // ========== SEPARADOR ==========
         [
-            'text' => 'Niveles',
-            'url'  => 'admin/niveles',
-            'icon' => 'fas fa-fw fa-layer-group',
-            'classes' => 'bg-blue text-white',
-            'can'  => 'is-admin',
+            'type' => 'divider',
+            'classes' => 'mt-2 mb-2'
         ],
+
+        // ========== PERFIL Y SALIDA ==========
         [
-            'text' => 'Turnos',
-            'url'  => 'admin/turnos',
-            'icon' => 'fas fa-fw fa-clock',
-            'classes' => 'bg-blue text-white',
-            'can'  => 'is-admin',
-        ],
-        [
-            'text' => 'Bitácora',
-            'url'  => 'admin/bitacora',
-            'icon' => 'fas fa-fw fa-history',
-            'classes' => 'bg-blue text-white',
-            'can'  => 'is-admin',
-        ],
-        [
-            'text' => 'Horario Profesores',
-            'url'  => 'profesor/horario',
-            'icon' => 'fas fa-fw fa-calendar-week',
-            'classes' => 'bg-purple text-white',
-            'can'  => 'profesor-horario',
-        ],
-        [
-            'text' => 'Consulta de Notas',
-            'url'  => 'apoderado/consulta',
-            'icon' => 'fas fa-fw fa-file-alt',
-            'classes' => 'bg-info text-white',
-            'can'  => 'is-apoderado',
+            'text' => 'Mi Perfil',
+            'url' => 'profile',
+            'icon' => 'fas fa-fw fa-user-circle',
+            'icon_color' => 'info'
         ],
         [
             'text' => 'Cerrar Sesión',
-            'url'  => '#',
+            'url' => '#',
             'icon' => 'fas fa-fw fa-sign-out-alt',
-            'classes' => 'bg-danger text-white mt-4 logout-item',
-            'id' => 'sidebar-logout',
+            'icon_color' => 'danger',
+            'classes' => 'logout-item',
+            'id' => 'sidebar-logout'
         ],
     ],
 
@@ -460,20 +547,20 @@ return [
             ],
         ],
         'Sweetalert2' => [
-    'active' => true,
-    'files' => [
-        [
-            'type' => 'js',
-            'asset' => true,
-            'location' => 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css',
+                ],
+            ],
         ],
-        [
-            'type' => 'css',
-            'asset' => true,
-            'location' => 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css',
-        ],
-    ],
-],
         'Pace' => [
             'active' => false,
             'files' => [

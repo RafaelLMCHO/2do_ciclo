@@ -185,7 +185,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="{{ route('home') }}" class="btn btn-default"><i class="fas fa-arrow-left"></i>
+                                <a href="{{ route('home-panel') }}" class="btn btn-default"><i class="fas fa-arrow-left"></i>
                                     cancelar</a>
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
                                     Guardar</button>

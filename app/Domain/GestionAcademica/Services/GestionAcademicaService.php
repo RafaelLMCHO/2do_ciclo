@@ -11,17 +11,34 @@ class GestionAcademicaService
 {
     public function todasLasGestiones(): Collection
     {
-        return Gestion::all();
+        // CU22: Ordena los anios escolares mas recientes primero.
+        return Gestion::orderByDesc('nombre')->get();
     }
 
-    public function crearGestion(string $nombre): Gestion
+    public function crearGestion(string $nombre, string $fechaInicio, string $fechaFin): Gestion
     {
-        return Gestion::create(['nombre' => $nombre]);
+        // CU22: El documento indica que una gestion nueva inicia inactiva.
+        return Gestion::create([
+            'nombre' => $nombre,
+            'fechainicio' => $fechaInicio,
+            'fechafin' => $fechaFin,
+            'activo' => false,
+        ]);
     }
 
-    public function actualizarGestion(Gestion $gestion, string $nombre): void
+    public function actualizarGestion(Gestion $gestion, string $nombre, string $fechaInicio, string $fechaFin): void
     {
         $gestion->nombre = $nombre;
+        $gestion->fechainicio = $fechaInicio;
+        $gestion->fechafin = $fechaFin;
+        $gestion->save();
+    }
+
+    public function activarGestion(Gestion $gestion): void
+    {
+        // CU22: Solo puede existir una gestion activa a la vez.
+        Gestion::where('id_gestion', '!=', $gestion->id_gestion)->update(['activo' => false]);
+        $gestion->activo = true;
         $gestion->save();
     }
 

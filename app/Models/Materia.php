@@ -12,6 +12,7 @@ class Materia extends Model
 
     protected $fillable = [
         'nombre',
+        'carga_horaria',
         'distintivo',
         'id_campo',
     ];

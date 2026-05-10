@@ -1,72 +1,61 @@
 @extends('adminlte::page')
 
-
 @section('content_header')
-    <h1><b>Listado de Gestiones Educativas</b> </h1>
+    <h1><b>Años Escolares</b></h1>
     <hr>
-    <a href="{{url('admin/gestiones/create')  }}" class="btn btn-primary">Crear Nueva Gestion</a>
-    
 @stop
 
 @section('content')
-
-    <div class="row">
-        @foreach ($gestiones as $gestion)
-            <div class="col-md-3 col-sm-6 col-12">
-                <div class="info-box zoomP">
-                    <img src="{{ url('/img/calendario.gif') }}" width="70px" alt="">
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Gestiones Educativas</b></span>
-                        <span class="info-box-number" style="color: rgb(216, 219, 40);font-size:20pt"> {{ $gestion->nombre }} </span>
-                       <div class= "row">
-                            <a href ="{{ url('/admin/gestiones/'.$gestion->id.'/edit') }}" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Editar</a>
-                        
-                            <form action="{{ url('/admin/gestiones/'.$gestion->id) }}" method="post" id="miFormulario{{ $gestion->id }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="preguntar{{ $gestion->id }}(event)">
-                                    <i class="bi bi-trash"></i> Eliminar
-                                </button>
-                            </form>
-
-                            
-                            <script>
-                                function preguntar{{ $gestion->id }}(event) {
-                                    event.preventDefault();
-
-                                    Swal.fire({
-                                        title: '¿Desea eliminar este registro?',
-                                        text: '',
-                                        icon: 'question',
-                                        showDenyButton: true,
-                                        confirmButtonText: 'Eliminar',
-                                        confirmButtonColor: '#a5161d',
-                                        denyButtonColor: '#270a0a',
-                                        denyButtonText: 'Cancelar',
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            // JavaScript puro para enviar el formulario
-                                            document.getElementById('miFormulario{{ $gestion->id }}').submit();
-                                        }
-                                    });
-                                }
-                            </script>
-                       </div>
-                        </div>
-                </div>
-            </div>
-            
-        @endforeach
-        
+    <div class="card card-outline card-primary">
+        <div class="card-header d-flex align-items-center">
+            <h3 class="card-title"> Gestionar Año Escolar</h3>
+            <form action="{{ route('admin.gestiones.index') }}" method="GET" class="form-inline ml-auto">
+                <input type="text" name="search" class="form-control form-control-sm mr-2" placeholder="Buscar anio, fecha o estado..." value="{{ $search ?? '' }}">
+                <button class="btn btn-info btn-sm mr-2"><i class="fas fa-search"></i> Buscar</button>
+                <a href="{{ route('admin.gestiones.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo</a>
+            </form>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>Año</th>
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
+                        <th>Estado</th>
+                        <th class="text-center" style="width: 270px">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($gestiones as $gestion)
+                        <tr>
+                            <td>{{ $gestion->nombre }}</td>
+                            <td>{{ optional($gestion->fechainicio)->format('Y-m-d') }}</td>
+                            <td>{{ optional($gestion->fechafin)->format('Y-m-d') }}</td>
+                            <td><span class="badge badge-{{ $gestion->activo ? 'success' : 'secondary' }}">{{ $gestion->activo ? 'Activo' : 'Inactivo' }}</span></td>
+                            <td class="text-center">
+                                <form action="{{ route('admin.gestiones.activar', $gestion->id_gestion) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-info btn-sm" {{ $gestion->activo ? 'disabled' : '' }}><i class="fas fa-check"></i> Activar</button>
+                                </form>
+                                <a href="{{ route('admin.gestiones.edit', $gestion->id_gestion) }}" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Editar</a>
+                                <form action="{{ route('admin.gestiones.destroy', $gestion->id_gestion) }}" method="post" class="d-inline form-delete">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="5" class="text-center">No se encontraron años escolares.</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 @stop
 
-@section('css')
-    {{-- Aquí pondremos estilos más adelante si lo necesitas --}}
-@stop
-
 @section('js')
-    <script>
-        console.log("AdminLTE cargado correctamente");
-    </script>
+    @include('admin.partials.crud-alerts')
 @stop

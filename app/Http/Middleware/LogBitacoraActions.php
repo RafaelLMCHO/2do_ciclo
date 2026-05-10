@@ -10,13 +10,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
+// CU05: Middleware que registra acciones importantes en la bitacora.
 class LogBitacoraActions
 {
+    // CU05: Intercepta la peticion para registrar la accion despues de ejecutarla.
     public function handle(Request $request, Closure $next): Response
     {
+        // CU05: Marca inicio para medir rendimiento del registro de bitacora.
         $inicio = microtime(true);
+        // CU05: Continua con la peticion original antes de registrar.
         $response = $next($request);
 
+        // CU05: Omite bitacora si no hay usuario o la respuesta fallo.
         if (!$request->user() || $response->getStatusCode() >= 400) {
             Log::info('[PERF] LogBitacoraActions handle', [
                 'ms' => round((microtime(true) - $inicio) * 1000, 2),
@@ -28,19 +33,26 @@ class LogBitacoraActions
             return $response;
         }
 
+        // CU05: Marca inicio para resolver el nombre de la accion.
         $inicioResolver = microtime(true);
+        // CU05: Traduce la ruta actual a una accion legible.
         $accion = $this->resolveAction($request);
 
+        // CU05: Registra metrica tecnica de resolucion de accion.
         Log::info('[PERF] LogBitacoraActions resolveAction', [
             'ms' => round((microtime(true) - $inicioResolver) * 1000, 2),
             'route' => $request->route()?->getName(),
             'tiene_accion' => (bool) $accion,
         ]);
 
+        // CU05: Si la ruta tiene accion definida, se guarda en bitacora.
         if ($accion) {
+            // CU05: Marca inicio de escritura en bitacora.
             $inicioBitacora = microtime(true);
+            // CU05: Guarda accion del usuario autenticado.
             BitacoraLogger::log($request, $accion, $request->user());
 
+            // CU05: Registra metrica tecnica de escritura de bitacora.
             Log::info('[PERF] LogBitacoraActions bitacora', [
                 'ms' => round((microtime(true) - $inicioBitacora) * 1000, 2),
                 'route' => $request->route()?->getName(),
@@ -48,6 +60,7 @@ class LogBitacoraActions
             ]);
         }
 
+        // CU05: Registra metrica tecnica total del middleware.
         Log::info('[PERF] LogBitacoraActions handle', [
             'ms' => round((microtime(true) - $inicio) * 1000, 2),
             'route' => $request->route()?->getName(),
@@ -58,18 +71,25 @@ class LogBitacoraActions
         return $response;
     }
 
+    // CU05: Relaciona nombres de rutas con descripciones de acciones.
     private function resolveAction(Request $request): ?string
     {
+        // CU05: Obtiene el nombre de la ruta actual.
         $routeName = $request->route()?->getName();
+        // CU05: Obtiene el usuario autenticado.
         $user = $request->user();
 
+        // CU05: Si no hay ruta o usuario, no se registra accion.
         if (!$routeName || !$user) {
             return null;
         }
 
+        // CU05 y CU01: Obtiene etiqueta del rol para describir la accion.
         $rolLabel = Rol::tryFrom((int) $user->id_rol)?->label() ?? 'Usuario';
+        // CU05 y CU01: Verifica si el usuario es administrador.
         $esAdmin = (int) $user->id_rol === Rol::ADMIN->value;
 
+        // CU05: Mapa de rutas del sistema hacia mensajes de bitacora.
         return match ($routeName) {
             'home' => $rolLabel . ' accedio al panel principal',
 
