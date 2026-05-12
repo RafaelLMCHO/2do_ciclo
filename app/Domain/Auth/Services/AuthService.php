@@ -65,7 +65,7 @@ class AuthService
     // CU02 y CU06: Verifica si el profesor puede ingresar al modulo de horario.
     public function esProfesorConHorario(User $user): bool
     {
-        return $this->esProfesor($user) && Gate::allows('profesor-horario');
+        return $this->esProfesor($user) && Gate::allows('profesor.horario');
     }
 
     // CU01: Devuelve la etiqueta legible del rol del usuario.

@@ -12,7 +12,7 @@
         <div class="card-header d-flex align-items-center">
             <h3 class="card-title">CU24: Gestionar Personal Administrativo</h3>
             <form action="{{ route('admin.personal-administrativo.index') }}" method="GET" class="form-inline ml-auto">
-                <input type="text" name="search" class="form-control form-control-sm mr-2" placeholder="Buscar por CI, nombre, cargo o area..." value="{{ $search }}">
+                <input type="text" name="search" class="form-control form-control-sm mr-2" placeholder="Buscar por nombre, usuario o direccion..." value="{{ $search }}">
                 <button class="btn btn-info btn-sm mr-2"><i class="fas fa-search"></i> Buscar</button>
                 <a href="{{ route('admin.personal-administrativo.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo</a>
             </form>
@@ -21,22 +21,20 @@
             <table class="table table-bordered table-striped table-sm">
                 <thead>
                     <tr>
-                        <th>CI</th>
+                        <th>ID</th>
                         <th>Nombre</th>
-                        <th>Cargo</th>
-                        <th>Area</th>
-                        <th>Usuario</th>
+                        <th>Nombre de Usuario</th>
+                        <th>Direccion</th>
                         <th class="text-center" style="width: 190px">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($personal as $item)
                         <tr>
-                            <td>{{ $item->ci }}</td>
+                            <td>{{ $item->id_secretaria }}</td>
                             <td>{{ $item->nombre }} {{ $item->ap_paterno }} {{ $item->ap_materno }}</td>
-                            <td>{{ $item->cargo }}</td>
-                            <td>{{ $item->area }}</td>
                             <td>{{ $item->usuario->username ?? 'Sin usuario' }}</td>
+                            <td>{{ $item->direccion ?? 'Sin direccion' }}</td>
                             <td class="text-center">
                                 <a href="{{ route('admin.personal-administrativo.edit', $item) }}" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Editar</a>
                                 <form action="{{ route('admin.personal-administrativo.destroy', $item) }}" method="POST" class="d-inline form-delete">
@@ -47,7 +45,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="6" class="text-center">No se encontro personal administrativo.</td></tr>
+                        <tr><td colspan="5" class="text-center">No se encontro personal administrativo.</td></tr>
                     @endforelse
                 </tbody>
             </table>

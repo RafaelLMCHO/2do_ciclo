@@ -13,6 +13,22 @@ class ApoderadoService
     // CU04 y CU01: Resuelve un apoderado desde el username del usuario.
     public function resolverPorUsername(string $username): ?object
     {
+        // CU04 y CU01: Primero intenta resolver por el usuario vinculado directamente.
+        $usuario = DB::table('usuario')
+            ->where('username', $username)
+            ->where('id_rol', 4)
+            ->first();
+
+        if ($usuario && DB::getSchemaBuilder()->hasColumn('apoderado', 'id_user')) {
+            $apoderado = DB::table('apoderado')
+                ->where('id_user', $usuario->id_user)
+                ->first();
+
+            if ($apoderado) {
+                return $apoderado;
+            }
+        }
+
         // CU04: Busca apoderado cuyo username siga el formato apoderado_id.
         $apoderado = DB::table('apoderado')
             ->whereRaw("CONCAT('apoderado_', id_apoderado) = ?", [$username])

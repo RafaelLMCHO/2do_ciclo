@@ -13,4 +13,9 @@ class Rol extends Model
     protected $fillable = [
         'tipo',
     ];
+
+    public function funcionalidades()
+    {
+        return $this->belongsToMany(Funcionalidad::class, 'rol_funcionalidad', 'id_rol', 'id_funcionalidad');
+    }
 }

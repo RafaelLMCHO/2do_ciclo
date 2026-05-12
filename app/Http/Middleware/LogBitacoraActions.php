@@ -98,12 +98,23 @@ class LogBitacoraActions
             'admin.password.edit' => 'Administrador abrio la pantalla de cambio de contrasena',
             'admin.password.update' => 'Administrador cambio su contrasena',
 
+            'profile' => $rolLabel . ' consulto su perfil',
+            'profile.update' => $rolLabel . ' actualizo su perfil',
+            'profile.password' => $rolLabel . ' cambio su contrasena desde Mi Perfil',
+
             'admin.alumnos.index' => 'Administrador consulto el listado de alumnos',
             'admin.alumnos.create' => 'Administrador abrio el formulario de registro de alumnos',
             'admin.alumnos.store' => 'Administrador registro un alumno',
             'admin.alumnos.edit' => 'Administrador abrio la edicion de un alumno',
             'admin.alumnos.update' => 'Administrador actualizo los datos de un alumno',
             'admin.alumnos.destroy' => 'Administrador elimino un alumno',
+
+            'admin.apoderados.index' => 'Administrador consulto el listado de tutores',
+            'admin.apoderados.create' => 'Administrador abrio el registro de tutor',
+            'admin.apoderados.store' => 'Administrador registro un tutor',
+            'admin.apoderados.edit' => 'Administrador abrio la edicion de un tutor',
+            'admin.apoderados.update' => 'Administrador actualizo un tutor',
+            'admin.apoderados.destroy' => 'Administrador elimino un tutor',
 
             'admin.profesores.index' => 'Administrador consulto el listado de profesores',
             'admin.profesores.edit' => 'Administrador abrio la configuracion de acceso de un profesor',
@@ -129,6 +140,16 @@ class LogBitacoraActions
             'admin.turnos.destroy' => 'Administrador elimino un turno',
 
             'admin.bitacora.index' => 'Administrador consulto la bitacora',
+            'admin.permisos.index' => 'Administrador consulto permisos por rol',
+            'admin.permisos.update' => 'Administrador actualizo permisos por rol',
+
+            'admin.fichas-medicas.index' => $rolLabel . ' consulto fichas medicas',
+            'admin.fichas-medicas.create' => $rolLabel . ' abrio el registro de ficha medica',
+            'admin.fichas-medicas.store' => $rolLabel . ' registro una ficha medica',
+            'admin.fichas-medicas.show' => $rolLabel . ' consulto el detalle de una ficha medica',
+            'admin.fichas-medicas.edit' => $rolLabel . ' abrio la edicion de una ficha medica',
+            'admin.fichas-medicas.update' => $rolLabel . ' actualizo una ficha medica',
+            'admin.fichas-medicas.destroy' => $rolLabel . ' elimino una ficha medica',
 
             'profesor.horario' => $esAdmin
                 ? 'Administrador consulto el horario de profesores'

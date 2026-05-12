@@ -20,4 +20,9 @@ class Funcionalidad extends Model
     {
         return $this->belongsTo(Modulo::class, 'id_modulo', 'id_modulo');
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Rol::class, 'rol_funcionalidad', 'id_funcionalidad', 'id_rol');
+    }
 }

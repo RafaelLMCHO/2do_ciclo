@@ -305,7 +305,7 @@ return [
             'text' => 'PANEL PRINCIPAL',
             'icon' => 'fas fa-fw fa-tachometer-alt',
             'url' => 'panel',
-            'can' => 'is-admin',
+            'can' => 'home-panel',
         ],
 
         // ✅ Agrega este separador SUTIL
@@ -319,29 +319,29 @@ return [
             'icon' => 'fas fa-fw fa-users',
             'icon_color' => 'info',
             'submenu' => [
-                [
+                /* [
                     'text' => 'Administradores',
                     'url' => 'admin/administradores',
                     'icon' => 'fas fa-fw fa-user-shield',
-                    'can' => 'is-admin'
-                ],
+                    'can' => 'admin.administradores.index'
+                ], */
                 [
                     'text' => 'Personal Administrativo',
                     'url' => 'admin/personal-administrativo',
                     'icon' => 'fas fa-fw fa-user-cog',
-                    'can' => 'is-admin'
+                    'can' => 'admin.personal-administrativo.index'
                 ],
                 [
                     'text' => 'Profesores',
                     'url' => 'admin/profesores',
                     'icon' => 'fas fa-fw fa-chalkboard-teacher',
-                    'can' => 'is-admin'
+                    'can' => 'admin.profesores.index'
                 ],
                 [
                     'text' => 'Apoderados',
                     'url' => 'admin/apoderados',
                     'icon' => 'fas fa-fw fa-user-tie',
-                    'can' => 'is-admin'
+                    'can' => 'admin.apoderados.index'
                 ],
             ],
         ],
@@ -356,25 +356,31 @@ return [
                     'text' => 'Alumnos',
                     'url' => 'admin/alumnos',
                     'icon' => 'fas fa-fw fa-user-graduate',
-                    'can' => 'is-admin'
+                    'can' => 'admin.alumnos.index'
                 ],
                 [
                     'text' => 'Cursos',
                     'url' => 'admin/cursos',
                     'icon' => 'fas fa-fw fa-book',
-                    'can' => 'is-admin'
+                    'can' => 'admin.cursos.index'
                 ],
                 [
                     'text' => 'Materias',
                     'url' => 'admin/materias',
                     'icon' => 'fas fa-fw fa-book-open',
-                    'can' => 'is-admin'
+                    'can' => 'admin.materias.index'
+                ],
+                [
+                    'text' => 'Fichas Medicas',
+                    'url' => 'admin/fichas-medicas',
+                    'icon' => 'fas fa-fw fa-notes-medical',
+                    'can' => 'admin.fichas-medicas.index'
                 ],
                 [
                     'text' => 'Años Escolares',
                     'url' => 'admin/gestiones',
                     'icon' => 'fas fa-fw fa-calendar-alt',
-                    'can' => 'is-admin'
+                    'can' => 'admin.gestiones.index'
                 ],
 
 
@@ -383,14 +389,14 @@ return [
                     'url' => 'profesor/horario',
                     'icon' => 'fas fa-fw fa-calendar-week',
                     'icon_color' => 'purple',
-                    'can' => 'profesor-horario'
+                    'can' => 'profesor.horario'
                 ],
                 [
                     'text' => 'Consulta de Notas',
                     'url' => 'apoderado/consulta',
                     'icon' => 'fas fa-fw fa-file-alt',
                     'icon_color' => 'info',
-                    'can' => 'is-apoderado'
+                    'can' => 'apoderado.consulta'
                 ],
             ],
         ],
@@ -405,13 +411,13 @@ return [
                     'text' => 'Pagos',
                     'url' => 'admin/pagos',
                     'icon' => 'fas fa-fw fa-credit-card',
-                    'can' => 'is-admin'
+                    'can' => 'admin.pagos.index'
                 ],
                 [
                     'text' => 'Reportes Financieros',
                     'url' => 'admin/reportes-financieros',
                     'icon' => 'fas fa-fw fa-chart-line',
-                    'can' => 'is-admin'
+                    'can' => 'admin.reportes-financieros.index'
                 ],
             ],
         ],
@@ -426,19 +432,25 @@ return [
                     'text' => 'Bitácora',
                     'url' => 'admin/bitacora',
                     'icon' => 'fas fa-fw fa-history',
-                    'can' => 'is-admin'
+                    'can' => 'admin.bitacora.index'
                 ],
                 [
                     'text' => 'Modulos',
                     'url' => 'admin/modulos',
                     'icon' => 'fas fa-fw fa-th-large',
-                    'can' => 'is-admin'
+                    'can' => 'admin.modulos.index'
                 ],
                 [
                     'text' => 'Funcionalidades',
                     'url' => 'admin/funcionalidades',
                     'icon' => 'fas fa-fw fa-tasks',
-                    'can' => 'is-admin'
+                    'can' => 'admin.funcionalidades.index'
+                ],
+                [
+                    'text' => 'Permisos por Rol',
+                    'url' => 'admin/permisos',
+                    'icon' => 'fas fa-fw fa-user-lock',
+                    'can' => 'admin.permisos.index'
                 ],
             ],
         ],

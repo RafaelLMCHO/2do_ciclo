@@ -235,6 +235,7 @@ CREATE TABLE ficha_medica (
   id_ficha INT NOT NULL AUTO_INCREMENT,
   tipo_sangre VARCHAR(5) NOT NULL,
   alergias VARCHAR(100) NOT NULL,
+  contacto_emergencia VARCHAR(50) NULL,  -- ← Nuevo campo
   telf_emerg VARCHAR(20) NOT NULL,
   id_alumno INT NOT NULL,
   PRIMARY KEY (id_ficha),

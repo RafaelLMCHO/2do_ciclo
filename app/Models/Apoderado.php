@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 // CU04: Modelo del tutor/apoderado.
 class Apoderado extends Model
@@ -16,6 +17,7 @@ class Apoderado extends Model
 
     // CU04: Campos editables del tutor/apoderado.
     protected $fillable = [
+        'id_user',
         'ci',
         'nombres',
         'ap_paterno',
@@ -31,5 +33,29 @@ class Apoderado extends Model
     {
         return $this->belongsToMany(Alumno::class, 'parentesco', 'id_apoderado', 'id_alumno')
             ->withPivot('descripcion');
+    }
+
+    // CU04 y CU01: Usuario de consulta asociado directamente al tutor.
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
+    }
+
+    // CU04 y CU01: Devuelve el usuario asociado o cae al patron antiguo apoderado_ID.
+    public function usuarioConsulta(): ?User
+    {
+        if ($this->id_user) {
+            $usuario = User::where('id_user', $this->id_user)
+                ->where('id_rol', 4)
+                ->first();
+
+            if ($usuario) {
+                return $usuario;
+            }
+        }
+
+        return User::where('username', 'apoderado_' . $this->id_apoderado)
+            ->where('id_rol', 4)
+            ->first();
     }
 }

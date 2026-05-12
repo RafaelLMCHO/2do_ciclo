@@ -20,10 +20,20 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        Gate::before(function ($user) {
+        Gate::before(function ($user, string $ability) {
             if ((int) $user->id_rol === Rol::ADMIN->value) {
                 return true;
             }
+
+            if (! Schema::hasTable('rol_funcionalidad') || ! Schema::hasTable('funcionalidades')) {
+                return null;
+            }
+
+            return DB::table('rol_funcionalidad as rf')
+                ->join('funcionalidades as f', 'f.id_funcionalidad', '=', 'rf.id_funcionalidad')
+                ->where('rf.id_rol', (int) $user->id_rol)
+                ->where('f.nombre', $ability)
+                ->exists() ?: null;
         });
 
         Gate::define('is-admin', function ($user) {
@@ -38,7 +48,19 @@ class AppServiceProvider extends ServiceProvider
             return (int) $user->id_rol === Rol::APODERADO->value;
         });
 
+        Gate::define('fichas-medicas', function ($user) {
+            return $this->tienePermiso($user, 'admin.fichas-medicas.index');
+        });
+
+        Gate::define('permiso-dinamico', function ($user, string $permiso) {
+            return $this->tienePermiso($user, $permiso);
+        });
+
         Gate::define('profesor-horario', function ($user) {
+            if ($this->tienePermiso($user, 'profesor.horario')) {
+                return true;
+            }
+
             $inicio = microtime(true);
 
             if ((int) $user->id_rol !== Rol::PROFESOR->value) {
@@ -95,5 +117,22 @@ class AppServiceProvider extends ServiceProvider
 
             return $resultado;
         });
+    }
+
+    private function tienePermiso($user, string $permiso): bool
+    {
+        if ((int) $user->id_rol === Rol::ADMIN->value) {
+            return true;
+        }
+
+        if (! Schema::hasTable('rol_funcionalidad') || ! Schema::hasTable('funcionalidades')) {
+            return false;
+        }
+
+        return DB::table('rol_funcionalidad as rf')
+            ->join('funcionalidades as f', 'f.id_funcionalidad', '=', 'rf.id_funcionalidad')
+            ->where('rf.id_rol', (int) $user->id_rol)
+            ->where('f.nombre', $permiso)
+            ->exists();
     }
 }

@@ -7,18 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 // CU24: Personal administrativo con sus datos personales, laborales y usuario de acceso.
 class PersonalAdministrativo extends Model
 {
-    protected $table = 'personal_administrativo';
-    protected $primaryKey = 'id_personal_administrativo';
+    protected $table = 'secretaria';
+    protected $primaryKey = 'id_secretaria';
+
+    public $timestamps = false;
 
     protected $fillable = [
-        'ci',
+        'id_secretaria',
         'nombre',
         'ap_paterno',
         'ap_materno',
         'direccion',
         'telefono',
-        'cargo',
-        'area',
+        //'cargo',
+        //'area',
         'fecha_ingreso',
         'id_user',
     ];

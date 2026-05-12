@@ -24,4 +24,10 @@ class Alumno extends Model
     {
         return $this->belongsTo(User::class, 'id_user', 'id_user');
     }
+
+    // CU23: Ficha medica registrada para el estudiante.
+    public function fichaMedica()
+    {
+        return $this->hasOne(FichaMedica::class, 'id_alumno', 'id_alumno');
+    }
 }
