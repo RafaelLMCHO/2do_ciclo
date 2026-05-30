@@ -6,7 +6,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\ApoderadoController;
 use App\Http\Controllers\Admin\FichaMedicaController;
 use App\Http\Controllers\Admin\FuncionalidadController;
+use App\Http\Controllers\Admin\HorarioController as AdminHorarioController;
+use App\Http\Controllers\Admin\InfraestructuraController;
+use App\Http\Controllers\Admin\MatriculaController;
+use App\Http\Controllers\Admin\MensualidadController;
 use App\Http\Controllers\Admin\ModuloController;
+use App\Http\Controllers\Admin\NotaController;
+use App\Http\Controllers\Admin\PagoController;
 use App\Http\Controllers\Admin\PersonalAdministrativoController;
 use App\Http\Controllers\Admin\PerfilController;
 use App\Http\Controllers\Admin\PermisoRolController;
@@ -118,6 +124,15 @@ Route::resource('/admin/apoderados', ApoderadoController::class, ['as' => 'admin
     ->except(['show'])
     ->middleware(['auth', 'can:admin.apoderados.index']);
 
+// CU11: Gestionar Matricula - inscripcion de estudiantes a curso y gestion.
+Route::get('/admin/matriculas', [MatriculaController::class, 'index'])->name('admin.matriculas.index')->middleware(['auth', 'can:admin.matriculas.index']);
+Route::get('/admin/matriculas/create', [MatriculaController::class, 'create'])->name('admin.matriculas.create')->middleware(['auth', 'can:admin.matriculas.index']);
+Route::post('/admin/matriculas', [MatriculaController::class, 'store'])->name('admin.matriculas.store')->middleware(['auth', 'can:admin.matriculas.index']);
+Route::get('/admin/matriculas/{idInscripcion}/edit', [MatriculaController::class, 'edit'])->name('admin.matriculas.edit')->middleware(['auth', 'can:admin.matriculas.index']);
+Route::put('/admin/matriculas/{idInscripcion}', [MatriculaController::class, 'update'])->name('admin.matriculas.update')->middleware(['auth', 'can:admin.matriculas.index']);
+Route::patch('/admin/matriculas/{idInscripcion}/estado', [MatriculaController::class, 'cambiarEstado'])->name('admin.matriculas.estado')->middleware(['auth', 'can:admin.matriculas.index']);
+Route::delete('/admin/matriculas/{idInscripcion}', [MatriculaController::class, 'destroy'])->name('admin.matriculas.destroy')->middleware(['auth', 'can:admin.matriculas.index']);
+
 Route::get('/admin/cursos', [App\Http\Controllers\Admin\CursoController::class, 'index'])->name('admin.cursos.index')->middleware(['auth', 'can:admin.cursos.index']);
 Route::get('/admin/cursos/create', [App\Http\Controllers\Admin\CursoController::class, 'create'])->name('admin.cursos.create')->middleware(['auth', 'can:admin.cursos.index']);
 Route::post('/admin/cursos', [App\Http\Controllers\Admin\CursoController::class, 'store'])->name('admin.cursos.store')->middleware(['auth', 'can:admin.cursos.index']);
@@ -132,10 +147,45 @@ Route::get('/admin/materias/{id}/edit', [App\Http\Controllers\Admin\MateriaContr
 Route::put('/admin/materias/{id}', [App\Http\Controllers\Admin\MateriaController::class, 'update'])->name('admin.materias.update')->middleware(['auth', 'can:admin.materias.index']);
 Route::delete('/admin/materias/{id}', [App\Http\Controllers\Admin\MateriaController::class, 'destroy'])->name('admin.materias.destroy')->middleware(['auth', 'can:admin.materias.index']);
 
+// CU15: Gestionar Nota - registro, edicion, consulta, busqueda y eliminacion de calificaciones.
+Route::get('/admin/notas', [NotaController::class, 'index'])->name('admin.notas.index')->middleware(['auth', 'can:admin.notas.index']);
+Route::get('/admin/notas/create', [NotaController::class, 'create'])->name('admin.notas.create')->middleware(['auth', 'can:admin.notas.index']);
+Route::post('/admin/notas', [NotaController::class, 'store'])->name('admin.notas.store')->middleware(['auth', 'can:admin.notas.index']);
+Route::get('/admin/notas/{idAlumno}/{idMateria}/{idGestion}/{idCurso}/{idTrimestre}/edit', [NotaController::class, 'edit'])->name('admin.notas.edit')->middleware(['auth', 'can:admin.notas.index']);
+Route::put('/admin/notas/{idAlumno}/{idMateria}/{idGestion}/{idCurso}/{idTrimestre}', [NotaController::class, 'update'])->name('admin.notas.update')->middleware(['auth', 'can:admin.notas.index']);
+Route::delete('/admin/notas/{idAlumno}/{idMateria}/{idGestion}/{idCurso}/{idTrimestre}', [NotaController::class, 'destroy'])->name('admin.notas.destroy')->middleware(['auth', 'can:admin.notas.index']);
+
+// CU18: Gestionar Mensualidad - genera obligaciones, consulta estados y registra pagos mensuales.
+Route::get('/admin/mensualidades', [MensualidadController::class, 'index'])->name('admin.mensualidades.index')->middleware(['auth', 'can:admin.mensualidades.index']);
+Route::get('/admin/mensualidades/create', [MensualidadController::class, 'create'])->name('admin.mensualidades.create')->middleware(['auth', 'can:admin.mensualidades.index']);
+Route::post('/admin/mensualidades', [MensualidadController::class, 'store'])->name('admin.mensualidades.store')->middleware(['auth', 'can:admin.mensualidades.index']);
+Route::patch('/admin/mensualidades/{idPagoMensual}/pago', [MensualidadController::class, 'registrarPago'])->name('admin.mensualidades.pago')->middleware(['auth', 'can:admin.mensualidades.index']);
+
+// CU17: Gestionar Pago - registra, edita, anula, consulta y busca pagos.
+Route::get('/admin/pagos', [PagoController::class, 'index'])->name('admin.pagos.index')->middleware(['auth', 'can:admin.pagos.index']);
+Route::get('/admin/pagos/create', [PagoController::class, 'create'])->name('admin.pagos.create')->middleware(['auth', 'can:admin.pagos.index']);
+Route::post('/admin/pagos', [PagoController::class, 'store'])->name('admin.pagos.store')->middleware(['auth', 'can:admin.pagos.index']);
+Route::get('/admin/pagos/{tipo}/{referencia}/edit', [PagoController::class, 'edit'])->name('admin.pagos.edit')->middleware(['auth', 'can:admin.pagos.index']);
+Route::put('/admin/pagos/{tipo}/{referencia}', [PagoController::class, 'update'])->name('admin.pagos.update')->middleware(['auth', 'can:admin.pagos.index']);
+Route::patch('/admin/pagos/{tipo}/{referencia}/anular', [PagoController::class, 'anular'])->name('admin.pagos.anular')->middleware(['auth', 'can:admin.pagos.index']);
+
 // CU23: Gestionar Ficha Medica - CRUD de informacion medica por estudiante.
 Route::resource('/admin/fichas-medicas', FichaMedicaController::class, ['as' => 'admin'])
     ->parameters(['fichas-medicas' => 'ficha'])
     ->middleware(['auth', 'can:admin.fichas-medicas.index']);
+
+// CU20: Gestionar Infraestructura - CRUD de aulas y ambientes institucionales.
+Route::resource('/admin/infraestructura', InfraestructuraController::class, ['as' => 'admin'])
+    ->except(['show'])
+    ->middleware(['auth', 'can:admin.infraestructura.index']);
+
+// CU14: Gestionar Horario - asignacion de dias, horas y aulas para clases.
+Route::get('/admin/horarios', [AdminHorarioController::class, 'index'])->name('admin.horarios.index')->middleware(['auth', 'can:admin.horarios.index']);
+Route::get('/admin/horarios/create', [AdminHorarioController::class, 'create'])->name('admin.horarios.create')->middleware(['auth', 'can:admin.horarios.index']);
+Route::post('/admin/horarios', [AdminHorarioController::class, 'store'])->name('admin.horarios.store')->middleware(['auth', 'can:admin.horarios.index']);
+Route::get('/admin/horarios/{idMateria}/{idGestion}/{idCurso}/{idParalelo}/edit', [AdminHorarioController::class, 'edit'])->name('admin.horarios.edit')->middleware(['auth', 'can:admin.horarios.index']);
+Route::put('/admin/horarios/{idMateria}/{idGestion}/{idCurso}/{idParalelo}', [AdminHorarioController::class, 'update'])->name('admin.horarios.update')->middleware(['auth', 'can:admin.horarios.index']);
+Route::delete('/admin/horarios/{idMateria}/{idGestion}/{idCurso}/{idParalelo}', [AdminHorarioController::class, 'destroy'])->name('admin.horarios.destroy')->middleware(['auth', 'can:admin.horarios.index']);
 
 
 

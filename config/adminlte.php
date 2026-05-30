@@ -359,6 +359,13 @@ return [
                     'can' => 'admin.alumnos.index'
                 ],
                 [
+                    'text' => 'Matriculas',
+                    'url' => 'admin/matriculas',
+                    'icon' => 'fas fa-fw fa-address-card',
+                    'icon_color' => 'info',
+                    'can' => 'admin.matriculas.index'
+                ],
+                [
                     'text' => 'Cursos',
                     'url' => 'admin/cursos',
                     'icon' => 'fas fa-fw fa-book',
@@ -371,10 +378,31 @@ return [
                     'can' => 'admin.materias.index'
                 ],
                 [
+                    'text' => 'Gestionar Notas',
+                    'url' => 'admin/notas',
+                    'icon' => 'fas fa-fw fa-clipboard-list',
+                    'icon_color' => 'primary',
+                    'can' => 'admin.notas.index'
+                ],
+                [
                     'text' => 'Fichas Medicas',
                     'url' => 'admin/fichas-medicas',
                     'icon' => 'fas fa-fw fa-notes-medical',
                     'can' => 'admin.fichas-medicas.index'
+                ],
+                [
+                    'text' => 'Infraestructura',
+                    'url' => 'admin/infraestructura',
+                    'icon' => 'fas fa-fw fa-school',
+                    'icon_color' => 'teal',
+                    'can' => 'admin.infraestructura.index'
+                ],
+                [
+                    'text' => 'Gestionar Horarios',
+                    'url' => 'admin/horarios',
+                    'icon' => 'fas fa-fw fa-calendar-check',
+                    'icon_color' => 'success',
+                    'can' => 'admin.horarios.index'
                 ],
                 [
                     'text' => 'Años Escolares',
@@ -412,6 +440,13 @@ return [
                     'url' => 'admin/pagos',
                     'icon' => 'fas fa-fw fa-credit-card',
                     'can' => 'admin.pagos.index'
+                ],
+                [
+                    'text' => 'Mensualidades',
+                    'url' => 'admin/mensualidades',
+                    'icon' => 'fas fa-fw fa-file-invoice-dollar',
+                    'icon_color' => 'success',
+                    'can' => 'admin.mensualidades.index'
                 ],
                 [
                     'text' => 'Reportes Financieros',

@@ -151,6 +151,27 @@ class LogBitacoraActions
             'admin.fichas-medicas.update' => $rolLabel . ' actualizo una ficha medica',
             'admin.fichas-medicas.destroy' => $rolLabel . ' elimino una ficha medica',
 
+            'admin.notas.index' => $rolLabel . ' consulto la gestion de notas',
+            'admin.notas.create' => $rolLabel . ' abrio el registro de nota',
+            'admin.notas.store' => $rolLabel . ' registro una nota',
+            'admin.notas.edit' => $rolLabel . ' abrio la edicion de una nota',
+            'admin.notas.update' => $rolLabel . ' actualizo una nota',
+            'admin.notas.destroy' => $rolLabel . ' elimino una nota',
+
+            'admin.infraestructura.index' => $rolLabel . ' consulto la infraestructura',
+            'admin.infraestructura.create' => $rolLabel . ' abrio el registro de infraestructura',
+            'admin.infraestructura.store' => $rolLabel . ' registro infraestructura',
+            'admin.infraestructura.edit' => $rolLabel . ' abrio la edicion de infraestructura',
+            'admin.infraestructura.update' => $rolLabel . ' actualizo infraestructura',
+            'admin.infraestructura.destroy' => $rolLabel . ' elimino infraestructura',
+
+            'admin.horarios.index' => $rolLabel . ' consulto la gestion de horarios',
+            'admin.horarios.create' => $rolLabel . ' abrio el registro de horario',
+            'admin.horarios.store' => $rolLabel . ' registro un horario',
+            'admin.horarios.edit' => $rolLabel . ' abrio la edicion de un horario',
+            'admin.horarios.update' => $rolLabel . ' actualizo un horario',
+            'admin.horarios.destroy' => $rolLabel . ' elimino un horario',
+
             'profesor.horario' => $esAdmin
                 ? 'Administrador consulto el horario de profesores'
                 : 'Profesor consulto su horario',

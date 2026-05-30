@@ -99,7 +99,7 @@
                                 </div>
                             </div>
 
-                            @if ($perfil['tipo'] === 'profesor')
+                            @if (in_array($perfil['tipo'], ['profesor', 'secretaria'], true))
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Correo electronico</label>

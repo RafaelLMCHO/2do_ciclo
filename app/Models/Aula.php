@@ -10,7 +10,13 @@ class Aula extends Model
     protected $primaryKey = 'id_aula';
     public $timestamps = false;
 
-    protected $fillable = ['tipo'];
+    protected $fillable = [
+        'nombre',
+        'tipo',
+        'capacidad',
+        'ubicacion',
+        'estado',
+    ];
 
     public function materiaCursoGestionParalelo()
     {

@@ -52,6 +52,7 @@ class PersonalAdministrativoController extends Controller
             'ap_materno' => ['nullable', 'string', 'max:50'],
             'direccion' => ['nullable', 'string', 'max:100'],
             'telefono' => ['nullable', 'string', 'max:20'],
+            'correo' => ['nullable', 'email', 'max:100'],
             'username' => ['required', 'string', 'max:50', 'unique:usuario,username'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
@@ -72,6 +73,7 @@ class PersonalAdministrativoController extends Controller
                 'ap_materno' => $data['ap_materno'] ?? '',
                 'direccion' => $data['direccion'] ?? '',
                 'telefono' => $data['telefono'] ?? '',
+                'correo' => $data['correo'] ?? '',
                 'id_user' => $usuario->id_user,
             ]);
         });
@@ -163,6 +165,7 @@ class PersonalAdministrativoController extends Controller
             'ap_materno' => 'nullable|string|max:50',
             'direccion' => 'nullable|string|max:100',
             'telefono' => 'nullable|string|max:20',
+            'correo' => 'nullable|email|max:100',
            // 'cargo' => 'required|string|max:50',
            // 'area' => 'required|string|max:50',
             //'fecha_ingreso' => 'required|date',

@@ -24,6 +24,7 @@
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Nombre de Usuario</th>
+                        <th>Correo</th>
                         <th>Direccion</th>
                         <th class="text-center" style="width: 190px">Acciones</th>
                     </tr>
@@ -34,6 +35,7 @@
                             <td>{{ $item->id_secretaria }}</td>
                             <td>{{ $item->nombre }} {{ $item->ap_paterno }} {{ $item->ap_materno }}</td>
                             <td>{{ $item->usuario->username ?? 'Sin usuario' }}</td>
+                            <td>{{ $item->correo ?? 'Sin correo' }}</td>
                             <td>{{ $item->direccion ?? 'Sin direccion' }}</td>
                             <td class="text-center">
                                 <a href="{{ route('admin.personal-administrativo.edit', $item) }}" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Editar</a>
@@ -45,7 +47,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="5" class="text-center">No se encontro personal administrativo.</td></tr>
+                        <tr><td colspan="6" class="text-center">No se encontro personal administrativo.</td></tr>
                     @endforelse
                 </tbody>
             </table>

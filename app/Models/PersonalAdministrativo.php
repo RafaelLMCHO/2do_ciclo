@@ -19,6 +19,7 @@ class PersonalAdministrativo extends Model
         'ap_materno',
         'direccion',
         'telefono',
+        'correo',
         //'cargo',
         //'area',
         'fecha_ingreso',

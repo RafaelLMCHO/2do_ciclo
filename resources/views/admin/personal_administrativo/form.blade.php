@@ -23,21 +23,28 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="form-group">
             <label>Apellido materno</label>
             <input type="text" name="ap_materno" class="form-control" value="{{ old('ap_materno', $personalAdministrativo->ap_materno ?? '') }}">
             @error('ap_materno') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="form-group">
             <label>Telefono</label>
             <input type="text" name="telefono" class="form-control" value="{{ old('telefono', $personalAdministrativo->telefono ?? '') }}">
             @error('telefono') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Correo electronico</label>
+            <input type="email" name="correo" class="form-control" value="{{ old('correo', $personalAdministrativo->correo ?? '') }}">
+            @error('correo') <small class="text-danger">{{ $message }}</small> @enderror
+        </div>
+    </div>
+    <div class="col-md-3">
         <div class="form-group">
             <label>Direccion</label>
             <input type="text" name="direccion" class="form-control" value="{{ old('direccion', $personalAdministrativo->direccion ?? '') }}">

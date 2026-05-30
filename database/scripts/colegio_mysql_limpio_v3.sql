@@ -904,9 +904,9 @@ INSERT INTO secretaria (id_secretaria, nombre, ap_paterno, ap_materno, direccion
 (2, 'Patricia', 'Mendoza', 'Paz', 'Av. Santos Dumont 540', '70010002'),
 (3, 'VerÃ³nica', 'Rojas', 'Salvatierra', 'Av. Banzer 890', '70010003');
 
-INSERT INTO gestion (id_gestion, nombre, fechainicio, fechafin) VALUES
-(1, 'GestiÃ³n 2025', '2025-02-03', '2025-11-28'),
-(2, 'GestiÃ³n 2026', '2026-02-02', '2026-11-27');
+INSERT INTO gestion (id_gestion, nombre, fechainicio, fechafin, activo) VALUES
+(1, 'GestiÃ³n 2025', '2025-02-03', '2025-11-28', 0),
+(2, 'GestiÃ³n 2026', '2026-02-02', '2026-11-27', 1);
 
 INSERT INTO curso (id_curso, nombre) VALUES
 (1, 'PrekÃ­nder'),

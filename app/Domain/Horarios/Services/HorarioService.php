@@ -43,7 +43,7 @@ class HorarioService
                 'h.hora_fin',
                 'm.nombre as materia',
                 'c.nombre as curso',
-                'a.tipo as aula',
+                DB::raw('COALESCE(a.nombre, a.tipo) as aula'),
                 'g.nombre as gestion',
                 'p.descripcion as paralelo'
             )

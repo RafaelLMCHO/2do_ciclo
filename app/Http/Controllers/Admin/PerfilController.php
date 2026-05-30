@@ -175,6 +175,7 @@ class PerfilController extends Controller
             'secretaria' => [
                 'direccion' => ['nullable', 'string', 'max:100'],
                 'telefono' => ['nullable', 'string', 'max:20'],
+                'correo' => ['nullable', 'email', 'max:100'],
             ],
             'apoderado' => [
                 'ocupacion' => ['nullable', 'string', 'max:50'],
@@ -202,7 +203,7 @@ class PerfilController extends Controller
     {
         $campos = match ($tipo) {
             'profesor' => ['direccion', 'telefono', 'correo'],
-            'secretaria' => ['direccion', 'telefono'],
+            'secretaria' => ['direccion', 'telefono', 'correo'],
             'apoderado' => ['ocupacion', 'telefono'],
             default => [],
         };

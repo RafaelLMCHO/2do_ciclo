@@ -43,7 +43,10 @@ return new class extends Migration
                 'admin.alumnos.index' => 'Gestionar estudiantes',
                 'admin.cursos.index' => 'Gestionar cursos',
                 'admin.materias.index' => 'Gestionar materias',
+                'admin.notas.index' => 'Gestionar notas',
                 'admin.fichas-medicas.index' => 'Gestionar fichas medicas',
+                'admin.infraestructura.index' => 'Gestionar infraestructura',
+                'admin.horarios.index' => 'Gestionar horarios',
                 'admin.gestiones.index' => 'Gestionar anios escolares',
                 'profesor.horario' => 'Consultar horario de profesores',
                 'apoderado.consulta' => 'Consultar notas de hijos',
@@ -101,14 +104,17 @@ return new class extends Migration
     private function asignarPermisosIniciales(): void
     {
         $asignaciones = [
-            RolEnum::PROFESOR->value => ['home-panel', 'profile', 'profesor.horario'],
+            RolEnum::PROFESOR->value => ['home-panel', 'profile', 'profesor.horario', 'admin.notas.index'],
             RolEnum::APODERADO->value => ['home-panel', 'profile', 'apoderado.consulta'],
             RolEnum::SECRETARIA->value => [
                 'home-panel',
                 'profile',
                 'admin.alumnos.index',
                 'admin.apoderados.index',
+                'admin.notas.index',
                 'admin.fichas-medicas.index',
+                'admin.infraestructura.index',
+                'admin.horarios.index',
             ],
         ];
 
