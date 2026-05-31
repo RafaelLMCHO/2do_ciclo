@@ -457,6 +457,15 @@ return [
             ],
         ],
 
+        // ========== REPORTES GENERALES ==========
+        [
+            'text' => 'Generar Reportes',
+            'url' => 'admin/reportes',
+            'icon' => 'fas fa-fw fa-file-invoice',
+            'icon_color' => 'success',
+            'can' => 'admin.reportes.index'
+        ],
+
         // ========== SEGURIDAD ==========
         [
             'text' => 'SEGURIDAD',

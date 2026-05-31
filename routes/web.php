@@ -192,6 +192,11 @@ Route::delete('/admin/horarios/{idMateria}/{idGestion}/{idCurso}/{idParalelo}', 
 // CU05: Gestionar Bitacora - consulta del historial de acciones.
 Route::get('/admin/bitacora', [App\Http\Controllers\Admin\BitacoraController::class, 'index'])->name('admin.bitacora.index')->middleware(['auth', 'can:admin.bitacora.index']);
 
+// CU21: Generar Reporte - modulo para la generacion, visualizacion y exportacion de reportes.
+Route::get('/admin/reportes', [App\Http\Controllers\Admin\ReporteController::class, 'index'])->name('admin.reportes.index')->middleware(['auth', 'can:admin.reportes.index']);
+Route::post('/admin/reportes/generar', [App\Http\Controllers\Admin\ReporteController::class, 'generar'])->name('admin.reportes.generar')->middleware(['auth', 'can:admin.reportes.index']);
+Route::get('/admin/reportes/exportar', [App\Http\Controllers\Admin\ReporteController::class, 'exportar'])->name('admin.reportes.exportar')->middleware(['auth', 'can:admin.reportes.index']);
+
 Route::get('/profesor/horario', [App\Http\Controllers\Profesor\HorarioController::class, 'index'])->name('profesor.horario')->middleware(['auth', 'can:profesor.horario']);
 
 // CU04: Gestionar Tutor - ruta relacionada con el tutor/apoderado para consultar hijos y notas.
