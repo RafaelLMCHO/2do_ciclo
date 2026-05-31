@@ -4,12 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+// CU03 y CU01: Modelo del estudiante y su usuario de acceso.
 class Alumno extends Model
 {
+    // CU03: Tabla real donde se guardan los estudiantes.
     protected $table = 'alumno';
+    // CU03: Llave primaria del alumno.
     protected $primaryKey = 'id_alumno';
+    // CU03: La tabla alumno no maneja timestamps de Laravel.
     public $timestamps = false;
 
+    // CU03 y CU01: Campos permitidos para registrar o actualizar estudiantes.
     protected $fillable = [
         'id_user',
         'ci',
@@ -18,8 +23,10 @@ class Alumno extends Model
         'ap_materno',
         'genero',
         'fecha_nac',
+        'telefono',
     ];
 
+    // CU03 y CU01: Usuario vinculado al estudiante para iniciar sesion.
     public function usuario()
     {
         return $this->belongsTo(User::class, 'id_user', 'id_user');

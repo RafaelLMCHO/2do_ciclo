@@ -5,10 +5,13 @@ namespace App\Domain\Notas\Services;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
+// CU15 y CU04: Servicio de consultas de notas para alumnos y apoderados.
 class NotaService
 {
+    // CU15: Construye consulta base con alumno, materia, gestion, curso y trimestre.
     public function consultaBaseNotas(): \Illuminate\Database\Query\Builder
     {
+        // CU15: Une las tablas necesarias para mostrar historial academico completo.
         return DB::table('nota as n')
             ->join('alumno as a', 'a.id_alumno', '=', 'n.id_alumno')
             ->join('materia as m', 'm.id_materia', '=', 'n.id_materia')
@@ -37,6 +40,7 @@ class NotaService
             ->orderBy('m.nombre');
     }
 
+    // CU15 y CU03: Devuelve notas de un alumno especifico.
     public function notasPorAlumno(int $idAlumno): Collection
     {
         return $this->consultaBaseNotas()
@@ -44,8 +48,10 @@ class NotaService
             ->get();
     }
 
+    // CU15 y CU04: Devuelve notas solo de hijos vinculados a un apoderado.
     public function notasFiltradasPorApoderado(int $idApoderado, ?int $hijoSeleccionado = null): Collection
     {
+        // CU04: Usa parentesco para asegurar que el apoderado solo vea sus alumnos.
         return $this->consultaBaseNotas()
             ->whereExists(function ($query) use ($idApoderado) {
                 $query->select(DB::raw(1))

@@ -23,6 +23,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Datos falsos usados por pruebas o seeders que necesiten usuarios generados.
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
@@ -37,6 +38,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
+        // Estado alternativo para crear usuarios sin correo verificado.
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);

@@ -49,6 +49,7 @@ class AlumnoController extends Controller
             'ap_materno' => ['required', 'string', 'max:50'],
             'genero' => ['required', Rule::in(['F', 'M'])],
             'fecha_nac' => ['required', 'date'],
+            'telefono' => ['required', 'string', 'max:20'],
             'username' => ['required', 'string', 'max:50', 'unique:usuario,username'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
@@ -86,6 +87,7 @@ class AlumnoController extends Controller
             'ap_materno' => ['required', 'string', 'max:50'],
             'genero' => ['required', Rule::in(['F', 'M'])],
             'fecha_nac' => ['required', 'date'],
+            'telefono' => ['required', 'string', 'max:20'],
             'username' => [
                 'required',
                 'string',

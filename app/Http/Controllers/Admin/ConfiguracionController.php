@@ -7,15 +7,19 @@ use App\Models\Configuracion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
+// Configuracion institucional: datos generales del Colegio "Los Angeles" usados por el sistema.
 class ConfiguracionController extends Controller
 {
+    // Muestra configuracion actual y catalogo de divisas disponible.
     public function index()
     {
+        // Valor local por defecto para no depender completamente del servicio externo.
         $divisas = [
             ['name' => 'Boliviano', 'symbol' => 'Bs'],
         ];
 
         try {
+            // Consulta divisas externas para completar opciones de configuracion.
             $response = Http::timeout(5)->get('https://api.hilariweb.com/divisas');
 
             if ($response->successful()) {
@@ -27,11 +31,14 @@ class ConfiguracionController extends Controller
             ];
         }
 
+        // Obtiene la primera configuracion institucional registrada.
         $configuracion = Configuracion::first();
         return view('admin.configuracion.index', compact('configuracion', 'divisas'));
     }
+    // Guarda o actualiza la configuracion general del colegio.
     public function store(Request $request)
     {
+       // Valida datos institucionales obligatorios y formato del logo.
        request()->validate([
             'nombre' => 'required',
             'descripcion' => 'required',
@@ -42,12 +49,15 @@ class ConfiguracionController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,svg',
         ]);
 
+        // Usa el primer registro como configuracion unica del sistema.
         $configuracion = Configuracion::first();
 
+        // Si todavia no existe configuracion, crea una instancia nueva.
         if (!$configuracion) {
             $configuracion = new Configuracion();
         }
 
+        // Asigna datos institucionales visibles en el panel.
         $configuracion->nombre = $request->nombre;
         $configuracion->descripcion = $request->descripcion;
         $configuracion->direccion = $request->direccion;
@@ -56,6 +66,7 @@ class ConfiguracionController extends Controller
         $configuracion->correo_electronico = $request->correo_electronico;
         $configuracion->web = $request->web;
 
+        // Si se cargo un logo nuevo, lo mueve a public/uploads/logos y guarda su ruta.
         if($request->hasFile('logo')){
     //Guardar nuevo logo
     $logoPath = $request->file('logo');
@@ -65,6 +76,7 @@ class ConfiguracionController extends Controller
     $configuracion->logo = 'uploads/logos/' . $nombreArchivo;
 }
 
+        // Persiste la configuracion institucional.
         $configuracion->save();
 
         return redirect()->route('admin.configuracion.index')->with('success', 'Configuración actualizada correctamente.');

@@ -7,8 +7,10 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
+// Seeder principal: crea datos minimos para entrar al sistema.
 class DatabaseSeeder extends Seeder
 {
+    // Desactiva eventos de modelos durante la carga inicial.
     use WithoutModelEvents;
 
     /**
@@ -16,6 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // CU01: Crea o actualiza el usuario administrador inicial.
         User::updateOrCreate(
             ['id_user' => 1],
             [
