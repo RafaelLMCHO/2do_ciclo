@@ -12,8 +12,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
+// CU24 y CU01: Controlador para gestionar personal administrativo y su usuario de acceso.
 class PersonalAdministrativoController extends Controller
 {
+    // CU24: Lista personal administrativo y permite buscar por datos basicos o usuario.
     public function index(Request $request)
     {
         // CU24: Busca por CI, nombre, apellido, cargo o area.
@@ -35,14 +37,17 @@ class PersonalAdministrativoController extends Controller
             ->orderBy('nombre')
             ->get();
 
+        // CU24: Envia listado y texto de busqueda a la vista.
         return view('admin.personal_administrativo.index', compact('personal', 'search'));
     }
 
+    // CU24: Abre formulario para registrar personal administrativo.
     public function create()
     {
         return view('admin.personal_administrativo.create');
     }
 
+    // CU24 y CU01: Guarda personal administrativo y crea su usuario.
     public function store(Request $request)
     {
         // CU24 y CU01: Valida datos personales, credenciales y confirmacion de password.
@@ -83,15 +88,19 @@ class PersonalAdministrativoController extends Controller
             ->with('icono', 'success');
     }
 
+    // CU24 y CU01: Abre formulario de edicion con el usuario relacionado.
     public function edit(PersonalAdministrativo $personalAdministrativo)
     {
+        // CU01: Precarga usuario para mostrar o editar credenciales.
         $personalAdministrativo->load('usuario');
 
         return view('admin.personal_administrativo.edit', compact('personalAdministrativo'));
     }
 
+    // CU24 y CU01: Actualiza datos del personal y credenciales de acceso.
     public function update(Request $request, PersonalAdministrativo $personalAdministrativo)
     {
+        // CU01: Carga usuario antes de validar y actualizar.
         $personalAdministrativo->load('usuario');
 
         // CU24 y CU01: Valida datos personales y nombre de usuario editable.
@@ -106,11 +115,14 @@ class PersonalAdministrativoController extends Controller
             'password' => ['nullable', 'string', 'min:6', 'confirmed'],
         ]);
 
+        // CU24 y CU01: Guarda los cambios en bloque para conservar consistencia.
         DB::transaction(function () use ($personalAdministrativo, $data, $credenciales) {
+            // CU24: Actualiza datos personales del registro administrativo.
             $personalAdministrativo->update($data);
 
             $usuario = $personalAdministrativo->usuario;
 
+            // CU01: Crea usuario si el registro antiguo no tenia credenciales.
             if (!$usuario) {
                 $usuario = User::create([
                     'username' => $credenciales['username'],
@@ -121,9 +133,11 @@ class PersonalAdministrativoController extends Controller
                 $personalAdministrativo->id_user = $usuario->id_user;
                 $personalAdministrativo->save();
             } else {
+                // CU01: Actualiza username y mantiene rol de secretaria.
                 $usuario->username = $credenciales['username'];
                 $usuario->id_rol = Rol::SECRETARIA->value;
 
+                // CU01: Cambia password solo cuando se envio una nueva.
                 if (!empty($credenciales['password'])) {
                     $usuario->password = Hash::make($credenciales['password']);
                 }
@@ -137,10 +151,12 @@ class PersonalAdministrativoController extends Controller
             ->with('icono', 'success');
     }
 
+    // CU24 y CU01: Elimina personal administrativo junto con su usuario si no hay dependencias.
     public function destroy(PersonalAdministrativo $personalAdministrativo)
     {
         // CU24: Si en la BD existen dependencias, se rechaza por integridad referencial.
         try {
+            // CU24 y CU01: Borra primero el registro administrativo y luego su usuario asociado.
             DB::transaction(function () use ($personalAdministrativo) {
                 $usuario = $personalAdministrativo->usuario;
                 $personalAdministrativo->delete();
@@ -157,6 +173,7 @@ class PersonalAdministrativoController extends Controller
             ->with('icono', 'success');
     }
 
+    // CU24: Centraliza reglas para validar datos personales del personal administrativo.
     private function validarPersonal(Request $request, ?int $id = null): array
     {
         return $request->validate([

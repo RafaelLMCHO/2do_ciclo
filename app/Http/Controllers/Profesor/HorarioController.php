@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+// CU14 y CU02: Controlador para que docentes consulten horario y administradores revisen horarios.
 class HorarioController extends Controller
 {
+    // CU14: Inyecta servicios de horario y autenticacion.
     public function __construct(
         protected HorarioService $horarioService,
         protected AuthService $authService,
@@ -18,15 +20,20 @@ class HorarioController extends Controller
         $this->middleware('auth');
     }
 
+    // CU14: Muestra horario por docente, agrupado por dia.
     public function index(Request $request)
     {
+        // CU14: Mide el rendimiento completo de la consulta.
         $inicio = microtime(true);
+        // CU01: Usuario autenticado.
         $user = Auth::user();
         $idProfesor = null;
 
+        // CU14: El administrador puede elegir docente desde filtro.
         if ($this->authService->esAdmin($user)) {
             $idProfesor = $request->get('id_profesor', 1);
         } else {
+            // CU02: El profesor ve su propio horario segun id_user.
             $inicioProfesorUser = microtime(true);
             $profesor = $this->horarioService->obtenerProfesorPorUserId($user->id_user);
 
@@ -38,12 +45,15 @@ class HorarioController extends Controller
             if ($profesor) {
                 $idProfesor = $profesor->id_profesor;
             } else {
+                // CU02: Soporte para usuarios antiguos tipo profesor_001.
                 $idProfesor = $this->horarioService->extraerIdProfesorDesdeUsername($user->username);
             }
         }
 
+        // CU14: Coleccion vacia si no se pudo resolver docente.
         $horarios = collect();
 
+        // CU14: Consulta horario solo si existe docente resuelto.
         if ($idProfesor) {
             $inicioHorario = microtime(true);
             $horarios = $this->horarioService->obtenerHorarioProfesor((int) $idProfesor);
@@ -56,6 +66,7 @@ class HorarioController extends Controller
             ]);
         }
 
+        // CU14: Agrupa las clases por dia para dibujar la tabla semanal.
         $inicioAgrupar = microtime(true);
         $horariosPorDia = $this->horarioService->agruparPorDia($horarios);
 

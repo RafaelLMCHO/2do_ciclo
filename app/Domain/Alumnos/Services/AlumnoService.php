@@ -31,6 +31,7 @@ class AlumnoService
                 'ap_materno' => $data['ap_materno'],
                 'genero' => $data['genero'],
                 'fecha_nac' => $data['fecha_nac'],
+                'telefono' => $data['telefono'],
             ]);
         });
     }
@@ -74,6 +75,7 @@ class AlumnoService
             $alumno->ap_materno = $data['ap_materno'];
             $alumno->genero = $data['genero'];
             $alumno->fecha_nac = $data['fecha_nac'];
+            $alumno->telefono = $data['telefono'];
             // CU03: Guarda cambios del estudiante.
             $alumno->save();
         });
