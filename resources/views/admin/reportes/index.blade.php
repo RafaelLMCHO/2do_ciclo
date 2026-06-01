@@ -206,11 +206,8 @@
                         <button type="button" class="btn btn-outline-secondary btn-sm mr-2 mb-1 export-btn" data-format="pdf">
                             <i class="fas fa-file-pdf mr-1"></i>PDF
                         </button>
-                        <button type="button" class="btn btn-outline-success btn-sm mr-2 mb-1 export-btn" data-format="excel">
+                        <button type="button" class="btn btn-outline-success btn-sm mb-1 export-btn" data-format="excel">
                             <i class="fas fa-file-excel mr-1"></i>Excel
-                        </button>
-                        <button type="button" class="btn btn-outline-info btn-sm mb-1 export-btn" data-format="csv">
-                            <i class="fas fa-file-csv mr-1"></i>CSV
                         </button>
                     </div>
                 </div>

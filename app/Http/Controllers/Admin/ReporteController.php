@@ -16,6 +16,10 @@ class ReporteController extends Controller
         1 => [
             'admin_usuarios',
             'admin_bitacora',
+            'admin_estudiantes_curso',
+            'admin_matriculas_gestion',
+            'admin_pagos_estado',
+            'admin_mora',
         ],
         6 => [
             'admin_estudiantes_curso',

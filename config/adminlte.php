@@ -465,6 +465,13 @@ return [
             'icon_color' => 'success',
             'can' => 'admin.reportes.index'
         ],
+        [
+            'text' => 'Reportes Estáticos',
+            'url' => 'admin/reportes-estaticos',
+            'icon' => 'fas fa-fw fa-file-alt',
+            'icon_color' => 'info',
+            'can' => 'admin.reportes_estaticos.index'
+        ],
 
         // ========== SEGURIDAD ==========
         [

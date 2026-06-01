@@ -197,6 +197,9 @@ Route::get('/admin/reportes', [App\Http\Controllers\Admin\ReporteController::cla
 Route::post('/admin/reportes/generar', [App\Http\Controllers\Admin\ReporteController::class, 'generar'])->name('admin.reportes.generar')->middleware(['auth', 'can:admin.reportes.index']);
 Route::get('/admin/reportes/exportar', [App\Http\Controllers\Admin\ReporteController::class, 'exportar'])->name('admin.reportes.exportar')->middleware(['auth', 'can:admin.reportes.index']);
 
+// Modulo de Reportes Estáticos
+Route::get('/admin/reportes-estaticos', [App\Http\Controllers\Admin\ReporteEstaticoController::class, 'index'])->name('admin.reportes_estaticos.index')->middleware(['auth', 'can:admin.reportes_estaticos.index']);
+
 Route::get('/profesor/horario', [App\Http\Controllers\Profesor\HorarioController::class, 'index'])->name('profesor.horario')->middleware(['auth', 'can:profesor.horario']);
 
 // CU04: Gestionar Tutor - ruta relacionada con el tutor/apoderado para consultar hijos y notas.

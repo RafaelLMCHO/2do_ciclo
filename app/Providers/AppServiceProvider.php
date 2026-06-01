@@ -69,6 +69,16 @@ class AppServiceProvider extends ServiceProvider
             return $this->tienePermiso($user, $permiso);
         });
 
+        // Permiso para el nuevo modulo de reportes estaticos.
+        Gate::define('admin.reportes_estaticos.index', function ($user) {
+            return in_array((int) $user->id_rol, [
+                Rol::ADMIN->value,
+                Rol::SECRETARIA->value,
+                Rol::PROFESOR->value,
+                Rol::APODERADO->value
+            ], true);
+        });
+
         // CU14 y CU02: Permiso especifico para que docentes vean horario.
         Gate::define('profesor-horario', function ($user) {
             // CU09: Si el rol tiene permiso dinamico, permite acceso.
