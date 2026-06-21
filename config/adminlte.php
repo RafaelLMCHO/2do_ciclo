@@ -113,8 +113,8 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'path' => 'img/Colegio.jpg',
+            'alt' => 'Colegio Los Angeles',
             'effect' => 'animation__shake',
             'width' => 60,
             'height' => 60,
@@ -222,7 +222,7 @@ return [
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
-    'sidebar_nav_animation_speed' => 300,
+    'sidebar_nav_animation_speed' => 220,
 
     /*
     |--------------------------------------------------------------------------
@@ -326,6 +326,12 @@ return [
                     'can' => 'admin.administradores.index'
                 ], */
                 [
+                    'text' => 'Usuarios del Sistema',
+                    'url' => 'admin/usuarios',
+                    'icon' => 'fas fa-fw fa-users-cog',
+                    'can' => 'admin.usuarios.index'
+                ],
+                [
                     'text' => 'Personal Administrativo',
                     'url' => 'admin/personal-administrativo',
                     'icon' => 'fas fa-fw fa-user-cog',
@@ -383,6 +389,13 @@ return [
                     'icon' => 'fas fa-fw fa-clipboard-list',
                     'icon_color' => 'primary',
                     'can' => 'admin.notas.index'
+                ],
+                [
+                    'text' => 'Asistencias',
+                    'url' => 'admin/asistencias',
+                    'icon' => 'fas fa-fw fa-calendar-check',
+                    'icon_color' => 'info',
+                    'can' => 'admin.asistencias.index'
                 ],
                 [
                     'text' => 'Fichas Medicas',
@@ -447,6 +460,13 @@ return [
                     'icon' => 'fas fa-fw fa-file-invoice-dollar',
                     'icon_color' => 'success',
                     'can' => 'admin.mensualidades.index'
+                ],
+                [
+                    'text' => 'Becas',
+                    'url' => 'admin/becas',
+                    'icon' => 'fas fa-fw fa-award',
+                    'icon_color' => 'success',
+                    'can' => 'admin.becas.index'
                 ],
                 [
                     'text' => 'Reportes Financieros',

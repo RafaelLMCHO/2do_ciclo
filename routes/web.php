@@ -16,6 +16,11 @@ use App\Http\Controllers\Admin\PagoController;
 use App\Http\Controllers\Admin\PersonalAdministrativoController;
 use App\Http\Controllers\Admin\PerfilController;
 use App\Http\Controllers\Admin\PermisoRolController;
+use App\Http\Controllers\Admin\UsuarioController;
+use App\Http\Controllers\Admin\AsistenciaController;
+use App\Http\Controllers\Admin\BecaController;
+use App\Http\Controllers\Admin\ChatIaController;
+
 
 // CU06: Iniciar sesion - registra las rutas base de login de Laravel.
 Auth::routes(['register' => false]);
@@ -46,7 +51,7 @@ Route::get('/', function () {
 Route::get('/panel', [App\Http\Controllers\HomeController::class, 'index'])->name('home-panel')->middleware(['auth', 'can:home-panel']);
 
 Route::get('/admin/configuracion', [App\Http\Controllers\Admin\ConfiguracionController::class, 'index'])->name('admin.configuracion.index')->middleware('auth');
-Route::post('/admin/configuracion/create', [App\Http\Controllers\Admin\ConfiguracionController::class , 'store'])->name('admin.configuracion.store')->middleware('auth');
+Route::post('/admin/configuracion/create', [App\Http\Controllers\Admin\ConfiguracionController::class, 'store'])->name('admin.configuracion.store')->middleware('auth');
 
 // CU03: Gestionar Estudiante - listado de estudiantes.
 Route::get('/admin/alumnos', [App\Http\Controllers\Admin\AlumnoController::class, 'index'])->name('admin.alumnos.index')->middleware(['auth', 'can:admin.alumnos.index']);
@@ -119,6 +124,12 @@ Route::resource('/admin/personal-administrativo', PersonalAdministrativoControll
     ->parameters(['personal-administrativo' => 'personalAdministrativo'])
     ->middleware(['auth', 'can:admin.personal-administrativo.index']);
 
+// CU01: Gestionar Usuario - CRUD de credenciales de acceso del sistema.
+Route::resource('/admin/usuarios', UsuarioController::class, ['as' => 'admin'])
+    ->except(['show'])
+    ->parameters(['usuarios' => 'usuario'])
+    ->middleware(['auth', 'can:admin.usuarios.index']);
+
 // CU04: Gestionar Tutor - CRUD de apoderados y vinculacion con estudiantes.
 Route::resource('/admin/apoderados', ApoderadoController::class, ['as' => 'admin'])
     ->except(['show'])
@@ -179,6 +190,20 @@ Route::resource('/admin/infraestructura', InfraestructuraController::class, ['as
     ->except(['show'])
     ->middleware(['auth', 'can:admin.infraestructura.index']);
 
+// CU19: Gestionar Beca - CRUD de tipos de beca.
+Route::resource('/admin/becas', BecaController::class, ['as' => 'admin'])
+    ->except(['show'])
+    ->middleware(['auth', 'can:admin.becas.index']);
+
+// CU16: Gestionar Asistencia - CRUD de asistencia por materia/curso/gestion.
+Route::get('/admin/asistencias', [AsistenciaController::class, 'index'])->name('admin.asistencias.index')->middleware(['auth', 'can:admin.asistencias.index']);
+Route::get('/admin/asistencias/create', [AsistenciaController::class, 'create'])->name('admin.asistencias.create')->middleware(['auth', 'can:admin.asistencias.index']);
+Route::post('/admin/asistencias', [AsistenciaController::class, 'store'])->name('admin.asistencias.store')->middleware(['auth', 'can:admin.asistencias.index']);
+Route::get('/admin/asistencias/alumnos', [AsistenciaController::class, 'alumnosPorAsignacion'])->name('admin.asistencias.alumnos')->middleware(['auth', 'can:admin.asistencias.index']);
+Route::get('/admin/asistencias/{idMateria}/{idGestion}/{idCurso}/{fecha}/edit', [AsistenciaController::class, 'edit'])->name('admin.asistencias.edit')->middleware(['auth', 'can:admin.asistencias.index']);
+Route::put('/admin/asistencias', [AsistenciaController::class, 'update'])->name('admin.asistencias.update')->middleware(['auth', 'can:admin.asistencias.index']);
+Route::delete('/admin/asistencias/{id}', [AsistenciaController::class, 'destroy'])->name('admin.asistencias.destroy')->middleware(['auth', 'can:admin.asistencias.index']);
+
 // CU14: Gestionar Horario - asignacion de dias, horas y aulas para clases.
 Route::get('/admin/horarios', [AdminHorarioController::class, 'index'])->name('admin.horarios.index')->middleware(['auth', 'can:admin.horarios.index']);
 Route::get('/admin/horarios/create', [AdminHorarioController::class, 'create'])->name('admin.horarios.create')->middleware(['auth', 'can:admin.horarios.index']);
@@ -200,9 +225,16 @@ Route::get('/admin/reportes/exportar', [App\Http\Controllers\Admin\ReporteContro
 // Modulo de Reportes Estáticos
 Route::get('/admin/reportes-estaticos', [App\Http\Controllers\Admin\ReporteEstaticoController::class, 'index'])->name('admin.reportes_estaticos.index')->middleware(['auth', 'can:admin.reportes_estaticos.index']);
 
+// Ruta del Asistente de Voz IA para Reportes
+Route::post('/admin/chat-ia/preguntar', [ChatIaController::class, 'preguntar'])->name('admin.chat_ia.preguntar')->middleware('auth');
+Route::get('/admin/chat-ia/exportar', [ChatIaController::class, 'exportar'])->name('admin.chat_ia.exportar')->middleware('auth');
+
+
+
 Route::get('/profesor/horario', [App\Http\Controllers\Profesor\HorarioController::class, 'index'])->name('profesor.horario')->middleware(['auth', 'can:profesor.horario']);
 
 // CU04: Gestionar Tutor - ruta relacionada con el tutor/apoderado para consultar hijos y notas.
 Route::get('/apoderado/consulta', [App\Http\Controllers\Apoderado\ConsultaController::class, 'index'])
     ->name('apoderado.consulta')
     ->middleware(['auth', 'can:apoderado.consulta']);
+
