@@ -32,31 +32,31 @@ class Nota extends Model
     ];
 
     // CU15 y CU03: Alumno evaluado.
-    public function alumno()
+    public function alumno() // CU25:OPERACION: Relacion entre la nota y el alumno al que pertenece. 
     {
         return $this->belongsTo(Alumno::class, 'id_alumno', 'id_alumno');
     }
 
     // CU15 y CU13: Materia evaluada.
-    public function materia()
+    public function materia() // CU25:OPERACION: Relacion entre la nota y la materia a la que pertenece.
     {
         return $this->belongsTo(Materia::class, 'id_materia', 'id_materia');
     }
 
     // CU15 y CU22: Gestion escolar de la nota.
-    public function gestion()
+    public function gestion() // CU25:OPERACION: Relacion entre la nota y la gestion a la que pertenece.
     {
         return $this->belongsTo(Gestion::class, 'id_gestion', 'id_gestion');
     }
 
     // CU15 y CU12: Curso correspondiente a la nota.
-    public function curso()
+    public function curso() // CU25:OPERACION: Relacion entre la nota y el curso al que pertenece.
     {
         return $this->belongsTo(Curso::class, 'id_curso', 'id_curso');
     }
 
     // CU15: Trimestre al que pertenece la nota.
-    public function trimestre()
+    public function trimestre() // CU25:OPERACION: Relacion entre la nota y el trimestre al que pertenece.
     {
         return $this->belongsTo(Trimestre::class, 'id_trimestre', 'id_trimestre');
     }

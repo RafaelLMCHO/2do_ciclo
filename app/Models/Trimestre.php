@@ -15,7 +15,7 @@ class Trimestre extends Model
     public $timestamps = false;
 
     // CU15: Notas registradas en este trimestre.
-    public function notas()
+    public function notas() // CU25:OPERACION: Relacion entre el trimestre y las notas registradas en este trimestre.
     {
         return $this->hasMany(Nota::class, 'id_trimestre', 'id_trimestre');
     }

@@ -28,18 +28,18 @@ class Alumno extends Model
     ];
 
     // CU03 y CU01: Usuario vinculado al estudiante para iniciar sesion.
-    public function usuario()
+    public function usuario() // CU25:OPERACION: Relacion entre el alumno y su usuario de acceso.
     {
         return $this->belongsTo(User::class, 'id_user', 'id_user');
     }
 
     // CU23: Ficha medica registrada para el estudiante.
-    public function fichaMedica()
+    public function fichaMedica() // CU25:OPERACION: Relacion entre el alumno y su ficha medica.
     {
         return $this->hasOne(FichaMedica::class, 'id_alumno', 'id_alumno');
     }
 
-    public function beca()
+    public function beca() // CU25:OPERACION: Relacion entre el alumno y su beca.
     {
         return $this->belongsTo(Beca::class, 'id_beca', 'id_beca');
     }

@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\AsistenciaController;
 use App\Http\Controllers\Admin\BecaController;
 use App\Http\Controllers\Admin\ChatIaController;
 use App\Http\Controllers\Admin\PagoPasarelaController;
+use App\Http\Controllers\Admin\AcademicoConsultaController;
 
 
 // CU06: Iniciar sesion - registra las rutas base de login de Laravel.
@@ -209,6 +210,21 @@ Route::get('/admin/asistencias/{idMateria}/{idGestion}/{idCurso}/{fecha}/edit', 
 Route::put('/admin/asistencias', [AsistenciaController::class, 'update'])->name('admin.asistencias.update')->middleware(['auth', 'can:admin.asistencias.index']);
 Route::delete('/admin/asistencias/{id}', [AsistenciaController::class, 'destroy'])->name('admin.asistencias.destroy')->middleware(['auth', 'can:admin.asistencias.index']);
 
+// CU25: Consultar historial academico del estudiante.
+Route::get('/admin/historial-academico', [AcademicoConsultaController::class, 'historial'])->name('admin.historial-academico.index')->middleware(['auth', 'can:admin.historial-academico.index']);
+Route::get('/admin/historial-academico/alumnos', [AcademicoConsultaController::class, 'alumnosHistorial'])->name('admin.historial-academico.alumnos')->middleware(['auth', 'can:admin.historial-academico.index']);
+Route::get('/admin/historial-academico/imprimir', [AcademicoConsultaController::class, 'imprimirHistorial'])->name('admin.historial-academico.imprimir')->middleware(['auth', 'can:admin.historial-academico.index']);
+
+// CU26: Generar libreta academica con validacion de pagos.
+Route::get('/admin/libretas', [AcademicoConsultaController::class, 'libreta'])->name('admin.libretas.index')->middleware(['auth', 'can:admin.libretas.index']);
+Route::get('/admin/libretas/alumnos', [AcademicoConsultaController::class, 'alumnosLibreta'])->name('admin.libretas.alumnos')->middleware(['auth', 'can:admin.libretas.index']);
+Route::get('/admin/libretas/imprimir', [AcademicoConsultaController::class, 'imprimirLibreta'])->name('admin.libretas.imprimir')->middleware(['auth', 'can:admin.libretas.index']);
+
+// CU27: Consultar rendimiento academico.
+Route::get('/admin/rendimiento-academico', [AcademicoConsultaController::class, 'rendimiento'])->name('admin.rendimiento-academico.index')->middleware(['auth', 'can:admin.rendimiento-academico.index']);
+Route::get('/admin/rendimiento-academico/alumnos', [AcademicoConsultaController::class, 'alumnosRendimiento'])->name('admin.rendimiento-academico.alumnos')->middleware(['auth', 'can:admin.rendimiento-academico.index']);
+Route::get('/admin/rendimiento-academico/imprimir', [AcademicoConsultaController::class, 'imprimirRendimiento'])->name('admin.rendimiento-academico.imprimir')->middleware(['auth', 'can:admin.rendimiento-academico.index']);
+
 // CU14: Gestionar Horario - asignacion de dias, horas y aulas para clases.
 Route::get('/admin/horarios', [AdminHorarioController::class, 'index'])->name('admin.horarios.index')->middleware(['auth', 'can:admin.horarios.index']);
 Route::get('/admin/horarios/create', [AdminHorarioController::class, 'create'])->name('admin.horarios.create')->middleware(['auth', 'can:admin.horarios.index']);
@@ -242,4 +258,3 @@ Route::get('/profesor/horario', [App\Http\Controllers\Profesor\HorarioController
 Route::get('/apoderado/consulta', [App\Http\Controllers\Apoderado\ConsultaController::class, 'index'])
     ->name('apoderado.consulta')
     ->middleware(['auth', 'can:apoderado.consulta']);
-

@@ -398,6 +398,27 @@ return [
                     'can' => 'admin.asistencias.index'
                 ],
                 [
+                    'text' => 'Historial Academico',
+                    'route' => 'admin.historial-academico.index',
+                    'icon' => 'fas fa-fw fa-history',
+                    'icon_color' => 'info',
+                    'can' => 'admin.historial-academico.index'
+                ],
+                [
+                    'text' => 'Libretas Academicas',
+                    'route' => 'admin.libretas.index',
+                    'icon' => 'fas fa-fw fa-file-alt',
+                    'icon_color' => 'primary',
+                    'can' => 'admin.libretas.index'
+                ],
+                [
+                    'text' => 'Rendimiento Academico',
+                    'route' => 'admin.rendimiento-academico.index',
+                    'icon' => 'fas fa-fw fa-chart-line',
+                    'icon_color' => 'success',
+                    'can' => 'admin.rendimiento-academico.index'
+                ],
+                [
                     'text' => 'Fichas Medicas',
                     'url' => 'admin/fichas-medicas',
                     'icon' => 'fas fa-fw fa-notes-medical',

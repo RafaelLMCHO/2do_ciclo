@@ -23,20 +23,20 @@ class Materia extends Model
     ];
 
     // CU13: Campo de saberes al que pertenece la materia.
-    public function campo()
+    public function campo() // CU25:OPERACION: Relacion entre la materia y el campo de saberes al que pertenece.
     {
         return $this->belongsTo(CampoSaberes::class, 'id_campo', 'id_campo');
     }
 
     // CU12 y CU13: Cursos y gestiones donde se dicta la materia.
-    public function cursosGestiones()
+    public function cursosGestiones() // CU25:OPERACION: Relacion entre la materia y los cursos y gestiones donde se dicta.
     {
         return $this->belongsToMany(Curso::class, 'materia_curso_gestion', 'id_materia', 'id_curso')
             ->withPivot('id_gestion', 'id_profesor');
     }
 
     // CU13: Estructura de evaluacion de la materia (SER/SABER/HACER/AUTOEVALUACION).
-    public function estructuraNotas()
+    public function estructuraNotas() // CU25:OPERACION: Relacion entre la materia y su estructura de evaluacion.
     {
         return $this->hasMany(EstructuraNota::class, 'id_materia', 'id_materia');
     }

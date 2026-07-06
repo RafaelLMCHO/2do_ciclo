@@ -9,16 +9,21 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     public function up(): void
-    {
+    {   //Lo modifique
         if (Schema::hasTable('pago_mensual')) {
             Schema::table('pago_mensual', function (Blueprint $table) {
+                // AQUÍ AGREGAMOS LA COLUMNA SALDO FALTANTE
+                if (! Schema::hasColumn('pago_mensual', 'saldo')) {
+                    $table->decimal('saldo', 10, 2)->default(0)->after('monto');
+                }
+                
                 if (! Schema::hasColumn('pago_mensual', 'estado')) {
                     $table->string('estado', 20)->default('Pendiente')->after('descuento');
                 }
 
                 if (! Schema::hasColumn('pago_mensual', 'fecha_pago')) {
                     $table->date('fecha_pago')->nullable()->after('fecha');
-                }
+                }//hasta aqui
             });
 
             DB::table('pago_mensual')
